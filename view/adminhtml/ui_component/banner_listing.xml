@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">banner_listing.banner_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add New Banner</label>
+            </button>
+        </buttons>
+        <spinner>banner_columns</spinner>
+        <deps>
+            <dep>banner_listing.banner_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="banner_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">banner_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Niktar_PromoBannerAdminUi::promo_banner_view</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"
+                      name="banner_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>banner_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="observers" xsi:type="array">
+                    <item name="column" xsi:type="string">column</item>
+                </item>
+            </argument>
+            <settings>
+                <templates>
+                    <filters>
+                        <select>
+                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
+                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
+                        </select>
+                    </filters>
+                </templates>
+            </settings>
+            <filterSelect name="store_ids" provider="${ $.parentName }">
+                <settings>
+                    <captionValue>0</captionValue>
+                    <options class="Niktar\PromoBannerAdminUi\Ui\Source\StoreId"/>
+                    <label translate="true">Store View</label>
+                    <dataScope>store_id</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="banner_columns">
+        <column name="banner_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="active" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Enabled</label>
+            </settings>
+        </column>
+        <column name="store_id" class="Magento\Store\Ui\Component\Listing\Column\Store">
+            <settings>
+                <label translate="true">Store View</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="group_code" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Niktar\PromoBannerAdminUi\Ui\Source\GroupCode"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Group (Area)</label>
+            </settings>
+        </column>
+        <column name="name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+        <column name="start_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <timezone>false</timezone>
+                <dateFormat>MMM d, y</dateFormat>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Start Date</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="end_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <timezone>false</timezone>
+                <dateFormat>MMM d, y</dateFormat>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">End Date</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Modified</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="retina_image"
+                class="Niktar\PromoBannerAdminUi\Ui\Component\Banner\Listing\Column\Image">
+            <settings>
+                <bodyTmpl>Niktar_PromoBannerAdminUi/grid/cells/image</bodyTmpl>
+                <label translate="true">Retina Image</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="desktop_image"
+                class="Niktar\PromoBannerAdminUi\Ui\Component\Banner\Listing\Column\Image">
+            <settings>
+                <bodyTmpl>Niktar_PromoBannerAdminUi/grid/cells/image</bodyTmpl>
+                <label translate="true">Desktop Image</label>
+            </settings>
+        </column>
+        <column name="mobile_image"
+                class="Niktar\PromoBannerAdminUi\Ui\Component\Banner\Listing\Column\Image">
+            <settings>
+                <bodyTmpl>Niktar_PromoBannerAdminUi/grid/cells/image</bodyTmpl>
+                <label translate="true">Mobile Image</label>
+            </settings>
+        </column>
+
+        <column name="alt_text">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Alt Text</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="target_url">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Target Url</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="content">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Content</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="short_content_enabled" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Short Content Enabled</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="short_content">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Short Content</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Niktar\PromoBannerAdminUi\Ui\Component\Banner\Listing\Column\Actions">
+            <settings>
+                <indexField>banner_id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>107</resizeDefaultWidth>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

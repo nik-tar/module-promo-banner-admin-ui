@@ -1,0 +1,7 @@
+<div class="data-grid-cell-content">
+    <!-- ko foreach: {data: $col.getLabel($row()), as: 'item'} -->
+    <div>
+        <img data-bind="attr: {'src': item.direct_url || item.url}" style="max-width: 150px; height: auto">
+    </div>
+    <!-- /ko -->
+</div>

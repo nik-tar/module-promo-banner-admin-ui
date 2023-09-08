@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Niktar_PromoBannerAdminUi::promo_banner" title="Promo Banners" translate="true">
+                    <resource id="Niktar_PromoBannerAdminUi::promo_banner_save" sortOrder="10" title="Save Promo Banner"/>
+                    <resource id="Niktar_PromoBannerAdminUi::promo_banner_delete" sortOrder="20" title="Delete Promo Banner"/>
+                    <resource id="Niktar_PromoBannerAdminUi::promo_banner_update" sortOrder="30" title="Update Promo Banner"/>
+                    <resource id="Niktar_PromoBannerAdminUi::promo_banner_view" sortOrder="40" title="View Promo Banner"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
